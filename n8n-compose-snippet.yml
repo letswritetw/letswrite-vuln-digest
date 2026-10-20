@@ -1,0 +1,12 @@
+# 這只是提供給既有 n8n 服務合併的片段，不是一份可單獨啟動的新 compose。
+# n8n 是示範服務名稱；請對應自己的服務，保留帳密、ports、image、n8n_data 等設定。
+services:
+  n8n:
+    environment:
+      - GENERIC_TIMEZONE=Asia/Taipei
+      - TZ=Asia/Taipei
+      # 白名單保留原有的 /home/node/.n8n-files，再加入報告目錄；多個路徑以分號分隔。
+      - "N8N_RESTRICT_FILE_ACCESS_TO=/files/reports;/home/node/.n8n-files"
+    volumes:
+      # 換成自己的專案 reports 絕對路徑，不要直接照貼。
+      - "/path/to/letswrite-vuln-digest/reports:/files/reports"

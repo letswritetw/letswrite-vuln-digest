@@ -1,0 +1,19 @@
+# n8n 每日產出的真實情資，不納入版本控制。
+reports/
+
+# 金鑰、個人設定與執行產物。
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.verification/
+test-results/
+playwright-report/
+*.log
+*.zip
+.DS_Store
+Thumbs.db
+
+# 設計討論用的草稿頁面，不納入版本控制。
+.superpowers/

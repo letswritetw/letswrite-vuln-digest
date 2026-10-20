@@ -1,0 +1,14 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "dashboardUrl": "http://localhost:3030",
+  "telegramEnabled": false,
+  "telegramChatId": "",
+  "keywords": [
+    { "keyword": "node.js", "audience": ["開發者", "伺服器管理者"], "routine": false, "vendorManaged": false, "aliases": ["nodejs"] },
+    { "keyword": "docker", "audience": ["伺服器管理者", "開發者"], "routine": false, "vendorManaged": false, "aliases": [] },
+    { "keyword": "nginx", "audience": ["伺服器管理者"], "routine": false, "vendorManaged": false, "aliases": [] },
+    { "keyword": "openssl", "audience": ["伺服器管理者"], "routine": false, "vendorManaged": false, "aliases": [] },
+    { "keyword": "git", "audience": ["全員電腦", "開發者"], "routine": false, "vendorManaged": false, "aliases": [] }
+  ],
+  "npmPackages": ["vue", "vite", "axios", "lodash"]
+}

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "./styles/balsa-foundation.css";
+@import "./styles/balsa-theme.css";
+
+/* 顏色、字體、圓角與陰影全部交給 Balsa 主題；這裡只負責版面排列與 Markdown 排版。 */
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--balsa-role-background);
+  color: var(--balsa-role-foreground);
+  font-family: var(--balsa-font-body);
+  line-height: 1.6;
+}
+h1, h2, h3, h4, p, dl, dd, ol, ul, blockquote { margin: 0; }
+h1 { font-size: 1.375rem; line-height: 1.35; font-weight: 700; }
+h2 { font-size: 1.125rem; line-height: 1.45; font-weight: 700; }
+h4 { font-size: 0.875rem; font-weight: 700; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+.muted { color: var(--balsa-role-muted-foreground); }
+.small { font-size: 0.8125rem; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 10; transform: translateY(-160%); padding: 10px 18px; background: var(--balsa-role-surface); border: 1px solid var(--balsa-role-border-strong); }
+.skip-link:focus { transform: none; }
+
+/* 版面：單欄、靠左 */
+.page { max-width: 960px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+.app-header { border-bottom: 1px solid var(--balsa-role-border); background: var(--balsa-role-surface); }
+.app-header .page { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; padding-top: 12px; padding-bottom: 12px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 1.0625rem; font-weight: 700; align-self: center; }
+.header-tools { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
+.date-select { min-width: 170px; }
+.main { padding-top: 24px; padding-bottom: 40px; display: grid; gap: 16px; }
+.main:focus { outline: none; }
+.stack { display: grid; gap: 12px; }
+.report-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.download-links { display: flex; gap: 16px; margin-left: auto; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.executive-summary { max-width: 72ch; white-space: pre-line; }
+.view-tabs { display: grid; gap: 16px; }
+.view-tabs [role="tabpanel"] { display: grid; gap: 16px; padding-top: 4px; }
+.plain-list { padding-left: 20px; margin-top: 6px; }
+.routine-line p { margin-bottom: 6px; }
+.link-row { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* 必做卡片 */
+.card-trigger { display: grid; gap: 6px; text-align: left; }
+.card-title { font-size: 1.25rem; line-height: 1.35; font-weight: 700; overflow-wrap: anywhere; }
+.card-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 400; color: var(--balsa-role-muted-foreground); }
+.card-body { display: grid; }
+.card-block { border-top: 1px solid var(--balsa-role-border); padding: 14px 0; display: grid; gap: 6px; overflow-wrap: anywhere; }
+.card-block:last-child { padding-bottom: 0; }
+.steps { padding-left: 22px; display: grid; gap: 4px; }
+.quote { border-left: 3px solid var(--balsa-role-border-strong); background: var(--balsa-role-muted); padding: 8px 12px; border-radius: 0 6px 6px 0; }
+.cwe-guide { display: grid; gap: 4px; }
+.cwe-guide + .cwe-guide { margin-top: 10px; }
+.cwe-name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.card-records { list-style: none; padding: 0; display: grid; gap: 6px; font-size: 0.875rem; }
+.card-records li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; }
+
+/* 知悉清單與詳情 */
+.filters { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
+.filters .search-input { flex: 1 1 240px; min-width: 0; }
+.filters > [data-balsa="select"] { flex: 0 1 150px; min-width: 130px; }
+.intel-table { min-width: 0; }
+.intel-row { cursor: pointer; }
+.intel-row th { font-weight: 400; text-align: left; }
+.intel-row .row-title { display: block; margin-top: 4px; overflow-wrap: anywhere; }
+.intel-row td { overflow-wrap: anywhere; }
+.detail-panel { display: grid; gap: 12px; scroll-margin-top: 20px; }
+.detail-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.detail-top h3 { font-size: 1rem; overflow-wrap: anywhere; }
+.detail-summary { font-size: 0.9375rem; line-height: 1.8; }
+.detail-block { border-top: 1px solid var(--balsa-role-border); padding-top: 12px; display: grid; gap: 10px; }
+.fact-list > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; padding: 3px 0; }
+.fact-list dt { color: var(--balsa-role-muted-foreground); }
+.fact-list dd { overflow-wrap: anywhere; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.source-description { color: var(--balsa-role-muted-foreground); overflow-wrap: anywhere; }
+
+/* 狀態 */
+.empty-state { display: grid; gap: 10px; justify-items: start; }
+.skeleton-title { width: 55%; }
+.skeleton-block { height: 76px; margin: 12px 0; }
+.site-footer { border-top: 1px solid var(--balsa-role-border); }
+.site-footer .page { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; padding-top: 16px; padding-bottom: 16px; color: var(--balsa-role-muted-foreground); font-size: 0.875rem; }
+.coverage-footer p { margin-top: 8px; max-width: 80ch; overflow-wrap: anywhere; }
+
+/* Markdown 日報 */
+.markdown-body { line-height: 1.85; overflow-wrap: anywhere; max-width: 80ch; }
+.markdown-body h1 { font-size: 1.375rem; margin: 22px 0 14px; }
+.markdown-body h2 { margin: 22px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--balsa-role-border); }
+.markdown-body h3 { font-size: 1rem; margin: 18px 0 8px; }
+.markdown-body p, .markdown-body ul, .markdown-body ol { margin: 10px 0; }
+.markdown-body ul { list-style: disc; padding-left: 22px; }
+.markdown-body ol { list-style: decimal; padding-left: 22px; }
+.markdown-body blockquote { background: var(--balsa-role-muted); padding: 10px 14px; margin: 10px 0; color: var(--balsa-role-muted-foreground); border-radius: 6px; }
+.markdown-body pre { overflow-x: auto; padding: 12px; background: var(--balsa-role-muted); }
+.markdown-body code { font-family: ui-monospace, Consolas, monospace; font-size: 0.94em; }
+.markdown-body a { color: var(--balsa-role-accent); text-underline-offset: 3px; }
+.markdown-body table { display: block; overflow-x: auto; max-width: 100%; border-collapse: collapse; }
+.markdown-body td, .markdown-body th { padding: 8px; border: 1px solid var(--balsa-role-border); }
+
+@media (max-width: 760px) {
+  .page { padding-left: 16px; padding-right: 16px; }
+  .header-tools, .date-select { width: 100%; }
+  .download-links { margin-left: 0; width: 100%; }
+  .filters > [data-balsa="select"] { flex: 1 1 calc(50% - 5px); min-width: 0; }
+  .fact-list > div { grid-template-columns: 80px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+.intel-row[data-selected="true"] .muted { color: inherit; }
+/* 知悉清單：Balsa Table 預設用 min-width: max-content，長摘要會撐出橫向捲軸；改為自動換行。 */
+.intel-table table { min-width: 0; table-layout: fixed; }
+.intel-table th, .intel-table td { white-space: normal; overflow-wrap: anywhere; vertical-align: top; }
+.intel-table thead th:nth-child(1) { width: 46%; }

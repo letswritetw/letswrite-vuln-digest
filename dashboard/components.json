@@ -1,0 +1,5 @@
+{
+  "style": "default", "framework": "vue", "typescript": true,
+  "tailwind": { "config": "", "css": "src/style.css", "baseColor": "neutral", "cssVariables": true },
+  "aliases": { "components": "@/components", "ui": "@/components/ui", "utils": "@/lib/utils", "lib": "@/lib" }
+}

@@ -1,0 +1,53 @@
+name: letswrite-vuln-digest
+
+services:
+  reports-init:
+    image: docker.n8n.io/n8nio/n8n:2.42.7
+    user: "0:0"
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["node /setup/prepare-reports.js /files/reports && chown -R 1000:1000 /files/reports"]
+    restart: "no"
+    volumes:
+      - ./scripts/prepare-reports.js:/setup/prepare-reports.js:ro
+      - ./reports:/files/reports
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.42.7
+    restart: unless-stopped
+    depends_on:
+      reports-init:
+        condition: service_completed_successfully
+    # 啟動前依 config.json 與 .env 自動匯入工作流和 Credentials，再移除金鑰環境變數並啟動 n8n。
+    entrypoint: ["tini", "--", "/bin/sh", "-c", "node /setup/scripts/n8n-setup.js && unset GEMINI_API_KEY TELEGRAM_BOT_TOKEN && exec /docker-entrypoint.sh"]
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      GENERIC_TIMEZONE: Asia/Taipei
+      TZ: Asia/Taipei
+      N8N_RESTRICT_FILE_ACCESS_TO: /files/reports;/home/node/.n8n-files
+      N8N_SECURE_COOKIE: "false"
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./reports:/files/reports
+      - ./build.js:/setup/build.js:ro
+      - ./config.json:/setup/config.json:ro
+      - ./scripts:/setup/scripts:ro
+
+  security-dashboard:
+    build: ./dashboard
+    restart: unless-stopped
+    depends_on:
+      reports-init:
+        condition: service_completed_successfully
+    ports:
+      - "${DASHBOARD_BIND:-127.0.0.1}:3030:3030"
+    volumes:
+      - ./reports:/reports:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+volumes:
+  n8n_data:

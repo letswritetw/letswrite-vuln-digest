@@ -1,0 +1,2 @@
+# build.js 會把 scripts/*.js 原文嵌入工作流 JSON；固定 LF，避免 Windows 簽出成 CRLF 後與匯出檔不一致。
+* text=auto eol=lf

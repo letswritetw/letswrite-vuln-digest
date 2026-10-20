@@ -1,0 +1,18 @@
+name: letswrite-vuln-digest-dashboard
+
+services:
+  security-dashboard:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${DASHBOARD_BIND:-127.0.0.1}:3030:3030"
+    volumes:
+      - type: bind
+        source: "${REPORTS_HOST_DIR:-../reports}"
+        target: /reports
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
