@@ -36,10 +36,12 @@ if (analyses.size !== allow.size) throw new Error('Gemini 缺少被選取的 CVE
 const targetSet = new Set(guideTargets);
 const guides = new Map();
 for (const g of parsed.cweGuides) {
-  if (!g || !targetSet.has(g.cwe) || guides.has(g.cwe) || !['nameZh', 'riskZh', 'handlingZh'].every(k => isText(g[k]))) {
+  // Gemini 偶爾回傳 Cwe-88；只統一大小寫，仍須通過白名單與重複檢查。
+  const cwe = typeof g?.cwe === 'string' ? g.cwe.toUpperCase() : null;
+  if (!g || !targetSet.has(cwe) || guides.has(cwe) || !['nameZh', 'riskZh', 'handlingZh'].every(k => isText(g[k]))) {
     throw new Error('Gemini CWE 說明有未知或重複 CWE、無效欄位，停止發布');
   }
-  guides.set(g.cwe, { cwe: g.cwe, nameZh: g.nameZh, riskZh: g.riskZh, handlingZh: g.handlingZh });
+  guides.set(cwe, { cwe, nameZh: g.nameZh, riskZh: g.riskZh, handlingZh: g.handlingZh });
 }
 const cweGuides = guideTargets.filter(cwe => guides.has(cwe)).map(cwe => ({ ...guides.get(cwe),
   nameEn: prepared.cweInfo?.[cwe]?.nameEn ?? null, owasp: prepared.cweInfo?.[cwe]?.owasp ?? [] }));
